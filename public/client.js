@@ -28,24 +28,33 @@
   'use strict';
 
   const sseContainer = document.querySelector(selector);
+  const lastChild = sseContainer.lastChild;
   const sse = new EventSource('/sse/');
   sse.onmessage = function(event) {
     let p = document.createElement('p');
     p.textContent = event.data;
-    sseContainer.appendChild(p);
+    lastChild.after(p);
+    setTimeout(function() {
+      p.remove();
+    }, 17519);
   }
 })('#sse-container');
 
 (function(selector) {
   'use strict';
 
+  const wsContainer = document.querySelector(selector);
+  const button = wsContainer.querySelector('button');
+  const input = wsContainer.querySelector('input');
+  const lastChild = wsContainer.lastChild;
+
   function connect() {
-    const wsContainer = document.querySelector(selector);
-    const button = wsContainer.querySelector('button');
-    const input = wsContainer.querySelector('input');
     const eventListener = function(event) {
-      console.log('Seding message via websocket:' + input.value);
-      ws.send(input.value);
+      if (input.value !== '') {
+        console.log('Seding message via websocket:' + input.value);
+        ws.send(input.value);
+        input.value = '';
+      }
     };
     button.addEventListener('click', eventListener);
 
@@ -66,7 +75,7 @@
       console.log('Got message ' + event.data);
       let p = document.createElement('p');
       p.textContent = event.data;
-      wsContainer.appendChild(p);
+      lastChild.after(p);
     };
   }
 
