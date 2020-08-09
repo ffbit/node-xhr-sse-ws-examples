@@ -3,6 +3,8 @@
 const express = require('express');
 const app = express();
 const sse = require('./main/sse');
+const ws = require('./main/ws');
+const http = require('http');
 
 app.get('/sse/', function(req, res) {
   sse(res);
@@ -21,5 +23,8 @@ const options = {
 };
 app.use(express.static('public', options));
 
+const server = http.createServer(app);
+const wss = ws(server);
+
 const port = process.env.PORT || 3000;
-app.listen(port);
+server.listen(port);

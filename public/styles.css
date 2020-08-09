@@ -1,0 +1,17 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+h1 {
+    text-align: center;
+}
+.container {
+  display: flex;
+}
+.container > div {
+  flex-grow: 1;
+  border: 1px dashed;
+  margin: 4px;
+  padding: 4px;
+}
