@@ -1,3 +1,29 @@
+(function(selector) {
+  'use strict';
+
+  const xhrContainer = document.querySelector(selector);
+  const pingButton = xhrContainer.querySelector('button.ping');
+  const lastChild = xhrContainer.lastChild;
+  const pingEventListener = function(event) {
+    let ping = new XMLHttpRequest();
+    ping.open('GET', '/xhr/ping/');
+    ping.onload = function() {
+      if (this.status === 200) {
+        let p = document.createElement('p');
+        p.innerText = this.responseText;
+        lastChild.after(p);
+
+        setTimeout(function() {
+          p.remove();
+        }, 2000);
+      }
+    };
+    ping.send();
+  };
+  pingButton.addEventListener('click', pingEventListener);
+
+})('#xhr-container');
+
 (function (selector) {
   'use strict';
 

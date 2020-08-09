@@ -6,6 +6,10 @@ const sse = require('./main/sse');
 const ws = require('./main/ws');
 const http = require('http');
 
+app.get('/xhr/ping/', function(req, res) {
+  res.send('pong');
+});
+
 app.get('/sse/', function(req, res) {
   sse(res);
 });
